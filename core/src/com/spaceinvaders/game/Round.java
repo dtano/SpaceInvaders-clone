@@ -51,8 +51,8 @@ public class Round {
     // Might need to change what round instantiates and creates
     // Round for sure needs to create the enemies
     // Scoreboard and ship might be created by the game itself or gamescreen (Maybe even create a new ship every round)
-    public Round(Ship ship, SpriteBatch batch, OrthographicCamera camera, ScoreBoard scoreBoard) throws FileNotFoundException {
-        this.ship = ship;
+    public Round(SpriteBatch batch, OrthographicCamera camera, ScoreBoard scoreBoard) throws FileNotFoundException {
+        this.ship = new Ship();
         this.batch = batch;
         this.camera = camera;
         this.scoreBoard = scoreBoard;

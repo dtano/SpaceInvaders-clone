@@ -20,6 +20,9 @@ public class Ship extends MovingObject implements IBlaster {
     private int lives = 3;
     private int deathDelay = 3;
     private float lastDeath = 0;
+
+
+    // For the flickering effect
     private float alpha = .0f;
 
     public Ship(){

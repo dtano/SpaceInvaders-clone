@@ -40,7 +40,7 @@ public class SpaceInvaders extends Game {
 		scoreBoard = new ScoreBoard(ship.getLives());
 
 		try {
-			round = new Round(ship, batch, camera, scoreBoard);
+			round = new Round(batch, camera, scoreBoard);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -108,7 +108,7 @@ public class SpaceInvaders extends Game {
 
 	public void initRound(){
         try {
-            round = new Round(ship, batch, camera, scoreBoard);
+            round = new Round(batch, camera, scoreBoard);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

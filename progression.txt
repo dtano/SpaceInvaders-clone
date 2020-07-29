@@ -1,0 +1,53 @@
+Space Invaders Progress
+
+- Display ship on screen
+- Ship can move based on user input
+- Moving objects do not pass through walls
+- Ship can shoot missiles
+- Alien can shoot missiles every 2 seconds
+- The missiles can collide with moving objects
+	- Colliding with the ship will reduce the ship's number of lives
+	- Ship's position will be reset to the initial starting position
+- A scoreboard has been created
+	- Will handle all score and lives related ui
+- Game score updated based on alien's score
+- Alien can gradually move toward the player
+    - Every time it reaches a wall, it goes down and increases its speed
+- Aliens can move as a line
+    - The rightmost and leftmost aliens are both identified
+    - The box that encapsulates the line are made based on the distance between Right and Left
+    - Every alien reverses directions when the box reaches the wall boundaries
+        - The box is then adjusted according to the Left and Right aliens
+    - Randomly chosen alien shoots every 2 seconds
+
+//// Ideas for movement handling
+    ///    - Have a swarm class that holds all the aliens
+    ///        - Could also hold an arraylist of composite AlienGroups
+    ///    - To update the movement, swarm will loop through its collection and call the update method on every alien
+    ///        - Have a big rectangle encapsulate the entire swarm of aliens
+    ///        - When either the right or left sides of the box touch the walls, every alien will be told to change
+    ///          directions and move down by a certain amount
+    ///        - Gonna need a new collideWith() for swarm (idk how to do it yet)
+    ///        - Select a random alien to shoot every few seconds if there is no alien right in front of it
+    ///             - Every line might need to select an alien
+    ///        - How to check though???
+    ///             - if a 2d array is used, then indexing the position in front of the alien and checking if that alien
+    ///               is dead will do
+
+
+Things to do:
+
+
+
+
+
+
+------ All of the things are done --------
+
+Things to fix:
+- The wall collisions
+- Swarm still has bugs
+    - Just the wall collisions
+- Might need to make the speed of the aliens increase as there are lesser aliens
+
+

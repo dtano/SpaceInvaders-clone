@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Alien extends Enemy implements IBlaster {
-    private final int SPEED = 10;
+    private final int SPEED = 15;
     private final double VELOCITY_INCREASE = 1.2;
     protected final int WALL_BOUNDARY = 60;
     protected boolean canShoot = false;
 
 
-    protected float shotChance = 0.33f;
+    protected float shotChance = 0.90f;
 
     @Override
     public void draw(SpriteBatch batch) {
@@ -52,13 +52,18 @@ public abstract class Alien extends Enemy implements IBlaster {
 
     public void shoot(ArrayList<Projectile> blasts){
         Random rand = new Random();
-        /*
+
+
         if(rand.nextFloat() <= shotChance){
             blasts.add(new AlienProjectile(getX() + getSprite().getWidth()/2, getY()));
         }
 
-         */
-        blasts.add(new AlienProjectile(getX() + getSprite().getWidth()/2, getY()));
+
+
+
+
+
+        //blasts.add(new AlienProjectile(getX() + getSprite().getWidth()/2, getY()));
     }
 
     public void clearedToShoot(){

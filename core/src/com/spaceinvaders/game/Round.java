@@ -32,7 +32,7 @@ public class Round {
 
     //private ArrayList<Projectile> friendlyBlasts = new ArrayList<>();
     private float shotDelay = 0;
-    private int timedShotDelay = 2;
+    private int timedShotDelay = 1;
 
     private float lastShot = 0;
     private float shipDelay = 0.5f;
@@ -66,6 +66,7 @@ public class Round {
     }
 
     public void playRound(float delta){
+        /*
         if(pause == false){
             // Lets the clock run
             Clock.tick();
@@ -134,15 +135,89 @@ public class Round {
             blasts.removeAll(blastDump);
 
             // Renders everything on screen
-            //render();
+            render();
 
             // UFO is added if certain conditions are met
             generateUFO();
 
         }
 
-        // Renders everything on screen regardless of the condition
+         */
+
+        // Lets the clock run
+        Clock.tick();
+
+        if(enemies.size() == 0 && gameOver == false){
+            won = true;
+            //return;
+            // Switch the state to WIN
+        }
+
+        if(gameOver == true){
+            // Switch the state to OVER
+            //return;
+        }
+
+        // Holds the dead enemies per frame
+        ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
+
+        // Holds the removed projectiles per frame
+        ArrayList<Projectile> blastDump = new ArrayList<>();
+
+        // User control
+        handleInput(delta);
+
+        // Update ship's movements
+        ship.update(delta);
+
+
+        shotDelay += delta;
+
+
+        // This is a bit wonky
+        // Might need to change the algorithm behind the alien's shot behaviour
+
+        // Lets eligible aliens shoot every few seconds
+        if(shotDelay > timedShotDelay ) {
+            for(Enemy enemy : enemies){
+                if(enemy instanceof Alien){
+                    ((Alien) enemy).shoot(blasts);
+                    shotDelay = 0;
+                }
+            }
+        }
+
+
+
+        // Updates the enemies' movements
+        updateEnemies(delta);
+
+        // Updates the movements of the projectiles
+        updateProjectile(delta, blastDump);
+
+        // Checks for collisions between the projectiles, ship and aliens
+        checkCollisions();
+
+        // Checks whether the player has lost all their lives
+        if(ship.actuallyDead()){
+            gameOver = true;
+            System.out.println("Game Over");
+        }
+
+        // Removal of enemies
+        removeEnemies(enemiesToRemove);
+
+        // Removal of all projectiles
+        blasts.removeAll(blastDump);
+
+        // Renders everything on screen
         render();
+
+        // UFO is added if certain conditions are met
+        generateUFO();
+
+        // Renders everything on screen regardless of the condition
+        //render();
 
 
 
@@ -193,7 +268,11 @@ public class Round {
 
     public void freeze(){
         pause = true;
-        //render();
+        render();
+    }
+
+    public void resume(){
+        pause = false;
     }
 
     /**

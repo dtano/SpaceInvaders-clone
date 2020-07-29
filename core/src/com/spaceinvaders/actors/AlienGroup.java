@@ -132,6 +132,13 @@ public class AlienGroup extends Alien {
             // The original algorithm
 
             if(aliensToShoot.size() != 0){
+                /*
+                if(random.nextFloat() < 0.50f){
+                    int alienIndex = random.nextInt(aliensToShoot.size());
+                    aliensToShoot.get(alienIndex).shoot(blasts);
+                }
+
+                 */
                 // Select a random alien from the cleared to shoot aliens
                 int alienIndex = random.nextInt(aliensToShoot.size());
                 aliensToShoot.get(alienIndex).shoot(blasts);

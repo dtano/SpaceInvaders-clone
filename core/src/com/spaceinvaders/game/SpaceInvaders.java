@@ -29,6 +29,7 @@ public class SpaceInvaders extends Game {
 		MENU,
 		GAME,
 		OVER,
+		WIN
 	}
 	private State currentState;
 
@@ -39,11 +40,14 @@ public class SpaceInvaders extends Game {
 		ship = new Ship();
 		scoreBoard = new ScoreBoard(ship.getLives());
 
+		/*
 		try {
 			round = new Round(batch, camera, scoreBoard);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+
+		 */
 
 
 		this.setScreen(new MenuScreen(this));
@@ -57,8 +61,14 @@ public class SpaceInvaders extends Game {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		//getScreen().render(delta);
 
-		//super.render();
+
+
+		// This automatically calls the render() method of the current set screen which is pretty nifty
+		super.render();
+
+		/*
 		switch(currentState){
 			case MENU:
 				getScreen().render(delta);
@@ -66,6 +76,7 @@ public class SpaceInvaders extends Game {
 			case GAME:
 
 				try {
+					//getScreen().hide();
 					setScreen(new GameScreen(this));
 					getScreen().render(delta);
 				} catch (FileNotFoundException e) {
@@ -74,17 +85,31 @@ public class SpaceInvaders extends Game {
 				//round.playRound(delta);
 				break;
 			case OVER:
-				//round.playRound(delta);
+				getScreen().hide();
 			    Screen over = new GameOverScreen(this);
-			    //setScreen(new GameOverScreen(this));
-			    getScreen().render(delta);
+			    setScreen(over);
+			    //getScreen().render(delta);
+			    //getScreen().pause();
                 over.render(delta);
+                break;
+			case WIN:
+				// 1. Make a screen that displays WINNER and the options to return to menu or to exit
+				// 2.
 		}
+
+		 */
+
+
+
+
+
+
 	}
 	
 	@Override
 	public void dispose () {
 		round.dispose();
+		getScreen().dispose();
 
 	}
 

@@ -62,7 +62,9 @@ public abstract class MovingObject extends Actor {
     }
 
     public void dispose(){
+
         img.dispose();
+
     }
 
     public boolean collideWith(Rectangle rect){

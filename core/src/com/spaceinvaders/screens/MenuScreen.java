@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.spaceinvaders.game.SpaceInvaders;
 
+import java.io.FileNotFoundException;
+
 public class MenuScreen implements Screen {
     private static final int PLAY_BUTTON_WIDTH = 220;
     private static final int PLAY_BUTTON_HEIGHT = 100;
@@ -62,7 +64,13 @@ public class MenuScreen implements Screen {
                 300 + start.getHeight() && SpaceInvaders.GAME_HEIGHT - Gdx.input.getY() > 300 ){
             if(Gdx.input.isTouched()){
                 game.changeState(SpaceInvaders.State.GAME);
-                //Gdx.app.exit();
+
+                try {
+                    game.setScreen(new GameScreen(game));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
 
@@ -95,11 +103,15 @@ public class MenuScreen implements Screen {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
     public void dispose() {
-
+        title.dispose();
+        bg.dispose();
+        exit.dispose();
+        start.dispose();
+        font.dispose();
     }
 }

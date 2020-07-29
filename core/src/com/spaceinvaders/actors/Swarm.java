@@ -8,6 +8,7 @@ import com.spaceinvaders.game.SpaceInvaders;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Swarm extends AlienGroup {
     private boolean reachEnd = false;
@@ -83,6 +84,7 @@ public class Swarm extends AlienGroup {
 
     @Override
     public void update(float delta){
+        System.out.println(alienRows.size());
         Enemy left = rectanglePoints.getAlien(leftColumn);
         Enemy right = rectanglePoints.getAlien(rightColumn);
 
@@ -91,6 +93,7 @@ public class Swarm extends AlienGroup {
         // This line of code is a bit iffy
         // Sometimes it gets called multiple times, maybe because even after reversing its x position is still in
         // the GAME_WIDTH - WALL_BOUNDARY range
+        // This is the only problem left
         if(hitBox.getX() + hitBox.getWidth() > SpaceInvaders.GAME_WIDTH - WALL_BOUNDARY ||
                 hitBox.getX() < WALL_BOUNDARY){
             // The aliens are then made to reverse their directions
@@ -142,10 +145,25 @@ public class Swarm extends AlienGroup {
 
     public void shoot(ArrayList<Projectile> blasts){
         // Check every alien column
+        Random rand = new Random();
         giveShotClearance();
+
+        alienRows.get(rand.nextInt(alienRows.size())).shoot(blasts);
+
+        /*
+        for(int i = 0; i<rand.nextInt(alienRows.size()); i++){
+            alienRows.get(i).shoot(blasts);
+        }
+
+         */
+
+
+        /*
         for(AlienGroup row : alienRows){
             row.shoot(blasts);
         }
+
+         */
         // Only aliens in the head of their list can shoot
         // Activate the aliens clearToShoot
 
@@ -154,7 +172,12 @@ public class Swarm extends AlienGroup {
 
     public ArrayList<Alien> checkCollisions(Projectile projectile, ScoreBoard scoreBoard){
         //int index = 0;
+
+        // A nested arraylist of dead aliens
+        // The outer list represents the rows of the swarm and the inner list (in the form of an AlienGroup)
+        // represents the dead aliens in that particular row
         ArrayList<Alien> deadArr = new ArrayList<>();
+
         int rowNum = 1;
         for(AlienGroup row : alienRows){
             AlienGroup deadRow = new AlienGroup();
@@ -235,7 +258,9 @@ public class Swarm extends AlienGroup {
         // A map that maps the dead enemies to their row number
         // Will be used to remove the dead alien from its column
         HashMap<Integer, ArrayList<Alien>> enemiesToRemove = createRemovalMap();
-        ArrayList<ArrayList<Alien>> deadAliensByRow = new ArrayList<>();
+        //ArrayList<ArrayList<Alien>> deadAliensByRow = new ArrayList<>();
+
+        removeRows();
 
         int index = 0;
         for(Alien alien : aliensToRemove){
@@ -270,6 +295,19 @@ public class Swarm extends AlienGroup {
         changeBounds();
 
 
+    }
+
+    private void removeRows(){
+        ArrayList<AlienGroup> rows = new ArrayList<>();
+
+        for(AlienGroup row : alienRows){
+            if(row.dead()){
+                row.dispose();
+                rows.add(row);
+            }
+        }
+
+        alienRows.removeAll(rows);
     }
 
 
@@ -328,18 +366,13 @@ public class Swarm extends AlienGroup {
     }
 
     public boolean dead(){
-        int totalDead = 0;
-        for(AlienGroup row : alienRows){
-            if(row.dead()){
-                totalDead += 1;
-            }
-        }
-
-        if(totalDead == alienRows.size()){
+        if(alienRows.size() == 0){
             killed = true;
         }
         return killed;
     }
+
+
 
     public void dispose(){
         for(AlienGroup row : alienRows){

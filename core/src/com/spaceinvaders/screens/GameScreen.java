@@ -19,6 +19,7 @@ public class GameScreen implements Screen {
     private Texture bg;
 
     private SpriteBatch batch;
+    private OrthographicCamera camera = new OrthographicCamera();;
     private Round round;
     //private OrthographicCamera camera = new OrthographicCamera();;
     //private ScoreBoard scoreBoard;
@@ -30,8 +31,9 @@ public class GameScreen implements Screen {
 
         batch = game.batch;
         //scoreBoard = new ScoreBoard(ship.getLives());
-        //camera.setToOrtho(false,game.GAME_WIDTH,game.GAME_HEIGHT);
-        round = game.getRound();
+        camera.setToOrtho(false,game.GAME_WIDTH,game.GAME_HEIGHT);
+        //round = game.getRound();
+        round = new Round(batch, camera, game.getScoreBoard());
 
 
 
@@ -71,11 +73,17 @@ public class GameScreen implements Screen {
              *  6. Case quit:
              *          The game quits to the desktop
              */
-            round.freeze();
+            //round.freeze();
             game.changeState(SpaceInvaders.State.OVER);
+            game.setScreen(new GameOverScreen(game));
+            //dispose();
+
         }else if(round.gameOver()){
-            round.freeze();
+            //round.freeze();
             game.changeState(SpaceInvaders.State.OVER);
+
+            game.setScreen(new GameOverScreen(game));
+            //dispose();
         }
         //batch.end();
     }
@@ -87,22 +95,28 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
+        batch.begin();
+        //batch.draw(bg, 60, 0, SpaceInvaders.GAME_WIDTH - 120, SpaceInvaders.GAME_HEIGHT);
+        batch.draw(bg, 0, 0, SpaceInvaders.GAME_WIDTH, SpaceInvaders.GAME_HEIGHT);
+        game.getScoreBoard().render(batch);
+        batch.end();
+
         round.freeze();
     }
 
     @Override
     public void resume() {
-
+        round.resume();
+        game.changeState(SpaceInvaders.State.GAME);
     }
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
     public void dispose() {
         bg.dispose();
-        batch.dispose();
     }
 }

@@ -11,8 +11,8 @@ import java.util.HashMap;
 
 public class EnemyFactory {
 
-    private ArrayList<AlienGroup> alienRows = new ArrayList<>();
-    private Swarm swarm;
+    //private ArrayList<AlienGroup> alienRows = new ArrayList<>();
+    //private Swarm swarm;
     public static EnemyFactory instance;
 
     public static EnemyFactory getInstance(){
@@ -23,7 +23,7 @@ public class EnemyFactory {
     }
 
     public Swarm getSwarm(String fileName) throws FileNotFoundException {
-        swarm = new Swarm();
+        Swarm swarm = new Swarm();
         ArrayList<AlienGroup> rows = getAlienRows(fileName);
         System.out.println("From getSwarm(): " + rows.size());
         for(AlienGroup row : rows){
@@ -34,6 +34,7 @@ public class EnemyFactory {
     }
 
     public ArrayList<AlienGroup> getAlienRows(String fileName) throws FileNotFoundException {
+        ArrayList<AlienGroup> alienRows = new ArrayList<>();
         String line;
         HashMap<Float, Integer> rows = new HashMap<>();
         AlienGroup alienLine = new AlienGroup();

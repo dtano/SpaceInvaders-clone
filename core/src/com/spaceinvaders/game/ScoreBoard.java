@@ -31,6 +31,11 @@ public class ScoreBoard {
         currentLives--;
     }
 
+    public void reset(){
+        resetLives();
+        gameScore = 0;
+    }
+
     public void resetLives(){
         currentLives = shipLives;
     }

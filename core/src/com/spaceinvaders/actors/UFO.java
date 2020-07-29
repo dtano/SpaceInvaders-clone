@@ -26,7 +26,7 @@ public class UFO extends Enemy {
     int direction = -1;
 
     @Override
-    public void draw(SpriteBatch batch, float delta) {
+    public void draw(SpriteBatch batch) {
         getSprite().draw(batch);
     }
 

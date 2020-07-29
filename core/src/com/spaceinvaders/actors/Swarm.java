@@ -73,9 +73,9 @@ public class Swarm extends AlienGroup {
     }
 
     @Override
-    public void draw(SpriteBatch batch, float delta){
+    public void draw(SpriteBatch batch){
         for(AlienGroup line : alienRows){
-            line.draw(batch, delta);
+            line.draw(batch);
         }
     }
 

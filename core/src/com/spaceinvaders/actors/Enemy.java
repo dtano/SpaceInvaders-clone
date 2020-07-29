@@ -13,7 +13,7 @@ public abstract class Enemy extends MovingObject{
     protected int column;
     protected boolean reachEnd = false;
 
-    public abstract void draw(SpriteBatch batch, float delta);
+    public abstract void draw(SpriteBatch batch);
 
     public abstract void update(float deltaTime);
 

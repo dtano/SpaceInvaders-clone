@@ -46,10 +46,10 @@ public class AlienGroup extends Alien {
     }
 
     @Override
-    public void draw(SpriteBatch batch, float delta){
+    public void draw(SpriteBatch batch){
         //drawBox();
         for(Enemy alien : aliens){
-            alien.draw(batch, delta);
+            alien.draw(batch);
         }
     }
 

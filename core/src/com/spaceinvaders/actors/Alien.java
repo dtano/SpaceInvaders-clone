@@ -16,7 +16,7 @@ public abstract class Alien extends Enemy implements IBlaster {
     protected float shotChance = 0.33f;
 
     @Override
-    public void draw(SpriteBatch batch, float delta) {
+    public void draw(SpriteBatch batch) {
         getSprite().draw(batch);
     }
 

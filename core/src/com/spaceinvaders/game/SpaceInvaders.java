@@ -57,6 +57,7 @@ public class SpaceInvaders extends Game {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
 		//super.render();
 		switch(currentState){
 			case MENU:
@@ -73,23 +74,12 @@ public class SpaceInvaders extends Game {
 				//round.playRound(delta);
 				break;
 			case OVER:
-			    //Screen over = new GameOverScreen(this);
-			    setScreen(new GameOverScreen(this));
+				//round.playRound(delta);
+			    Screen over = new GameOverScreen(this);
+			    //setScreen(new GameOverScreen(this));
 			    getScreen().render(delta);
-                //over.render(delta);
+                over.render(delta);
 		}
-		/*
-		if(currentState == State.MENU){
-			getScreen().render(delta);
-		}else if(currentState == State.GAME){
-			round.playRound(delta);
-		}
-
-		 */
-		//getScreen().render(delta);
-
-
-		//round.playRound(delta);
 	}
 	
 	@Override
@@ -113,5 +103,9 @@ public class SpaceInvaders extends Game {
             e.printStackTrace();
         }
     }
+
+    public ScoreBoard getScoreBoard(){
+		return scoreBoard;
+	}
 
 }

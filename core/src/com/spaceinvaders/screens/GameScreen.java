@@ -45,31 +45,37 @@ public class GameScreen implements Screen {
     @Override
     public void render(float v) {
         //round.render()
-        //batch.begin();
+
+        batch.begin();
         //batch.draw(bg, 60, 0, SpaceInvaders.GAME_WIDTH - 120, SpaceInvaders.GAME_HEIGHT);
-        round.playRound(v);
-        //batch.end();
+        batch.draw(bg, 0, 0, SpaceInvaders.GAME_WIDTH, SpaceInvaders.GAME_HEIGHT);
+        //round.playRound(v);
+        game.getScoreBoard().render(batch);
+
 
         if(round.won()){
             Clock.reset();
             /**
              *  1. Show level cleared screen
              *  2. Advance to the next level once the player presses continue
+             *      - The lives is reset back to the number of lives given
              *      - If player presses quit, then the player is brought back to the menu
              *  3. Load new round with new alienPositions and maybe new alien speed
              *  4. If the player loses the round, the game over screen is shown and the player is given the option
              *     to either retry or quit
              *  5. Case retry:
              *          reload the first level (GameScreen might need an array of levels)
-             *          score is reset
+             *          score is reset, lives reset as well
              *  6. Case quit:
              *          The game quits to the desktop
              */
             game.changeState(SpaceInvaders.State.OVER);
         }else if(round.gameOver()){
             game.changeState(SpaceInvaders.State.OVER);
+        }else{
+            round.playRound(v);
         }
-        //batch.end();
+        batch.end();
     }
 
     @Override
@@ -79,7 +85,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
-
+        round.freeze();
     }
 
     @Override
@@ -94,6 +100,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        bg.dispose();
+        batch.dispose();
     }
 }

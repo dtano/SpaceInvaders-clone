@@ -24,6 +24,7 @@ public class Ship extends MovingObject implements IBlaster {
 
     // For the flickering effect
     private float alpha = .0f;
+    private float alphaModulation;
 
     public Ship(){
         setImg(new Texture("spaceInvaders_ship.png"));
@@ -36,13 +37,11 @@ public class Ship extends MovingObject implements IBlaster {
     }
 
 
-    public void draw(SpriteBatch batch, float delta){
-        alpha+=delta;
+    public void draw(SpriteBatch batch){
 
         if(reset == true){
-            getSprite().draw(batch, +5f*(float)Math.sin(alpha) + .5f);
+            getSprite().draw(batch, alphaModulation);
             //getSprite().draw(batch, (float)Math.abs(Math.sin(alpha)));
-            System.out.println(alpha);
         }else{
             getSprite().draw(batch);
         }
@@ -58,12 +57,17 @@ public class Ship extends MovingObject implements IBlaster {
 
 
     public void update(float delta){
+        alpha+=delta;
 
         //System.out.println(isInvincible());
         if(reset && Clock.getTime() - lastDeath > deathDelay){
             System.out.println("Invincibility over");
             reset = false;
             lastDeath = 0;
+        }
+
+        if(reset == true){
+            alphaModulation = +5f*(float)Math.sin(alpha) + .5f;
         }
 
         // This is for damage flicker

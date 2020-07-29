@@ -88,6 +88,7 @@ public class Round {
 
         // User control
         handleInput(delta);
+        System.out.println("Wang");
 
         // Update ship's movements
         ship.update(delta);

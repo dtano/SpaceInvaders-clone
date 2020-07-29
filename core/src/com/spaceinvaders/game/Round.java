@@ -66,7 +66,6 @@ public class Round {
     }
 
     public void playRound(float delta){
-
         if(pause == false){
             // Lets the clock run
             Clock.tick();
@@ -135,87 +134,15 @@ public class Round {
             blasts.removeAll(blastDump);
 
             // Renders everything on screen
-            render(delta);
+            //render();
 
             // UFO is added if certain conditions are met
             generateUFO();
 
         }
-        /*
-        // Lets the clock run
-        Clock.tick();
 
-        if(enemies.size() == 0 && gameOver == false){
-            won = true;
-            //return;
-            // Switch the state to WIN
-        }
-
-        if(gameOver == true){
-            // Switch the state to OVER
-            //return;
-        }
-
-        // Holds the dead enemies per frame
-        ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
-
-        // Holds the removed projectiles per frame
-        ArrayList<Projectile> blastDump = new ArrayList<>();
-
-        // User control
-        handleInput(delta);
-
-        // Update ship's movements
-        ship.update(delta);
-
-
-        shotDelay += delta;
-
-
-        // This is a bit wonky
-        // Might need to change the algorithm behind the alien's shot behaviour
-
-        // Lets eligible aliens shoot every few seconds
-        if(shotDelay > timedShotDelay ) {
-            for(Enemy enemy : enemies){
-                if(enemy instanceof Alien){
-                    ((Alien) enemy).shoot(blasts);
-                    shotDelay = 0;
-                }
-            }
-        }
-
-
-
-        // Updates the enemies' movements
-        updateEnemies(delta);
-
-        // Updates the movements of the projectiles
-        updateProjectile(delta, blastDump);
-
-        // Checks for collisions between the projectiles, ship and aliens
-        checkCollisions();
-
-        // Checks whether the player has lost all their lives
-        if(ship.actuallyDead()){
-            gameOver = true;
-            System.out.println("Game Over");
-        }
-
-        // Removal of enemies
-        removeEnemies(enemiesToRemove);
-
-        // Removal of all projectiles
-        blasts.removeAll(blastDump);
-
-        // Renders everything on screen
-        render(delta);
-
-        // UFO is added if certain conditions are met
-        generateUFO();
-
-         */
-
+        // Renders everything on screen regardless of the condition
+        render();
 
 
 
@@ -227,21 +154,6 @@ public class Round {
     }
 
     private void handleInput(float delta){
-        if(!(won || gameOver)){
-            // User control
-            if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && ship.getX() > 0){
-                ship.moveLeft(delta);
-            }else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && ship.getX() < SpaceInvaders.GAME_WIDTH - ship.getWidth()){
-                ship.moveRight(delta);
-            }
-
-            // Sets a limit on how many shots a ship can make at a time
-            if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (Clock.getTime() - lastShot > shipDelay || lastShot == 0)){
-                ship.shoot(blasts);
-                lastShot = Clock.getTime();
-            }
-        }
-        /*
         // User control
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && ship.getX() > 0){
             ship.moveLeft(delta);
@@ -255,28 +167,28 @@ public class Round {
             lastShot = Clock.getTime();
         }
 
-         */
+
     }
 
-    public void render(float delta){
+    public void render(){
         // Drawing on screen
         batch.setProjectionMatrix(camera.combined);
-        //batch.begin();
+        batch.begin();
 
         //batch.draw(bg, 60, 0, SpaceInvaders.GAME_WIDTH - 120, SpaceInvaders.GAME_HEIGHT);
         //batch.draw(bg, 0, 0, SpaceInvaders.GAME_WIDTH, SpaceInvaders.GAME_HEIGHT);
 
         //scoreBoard.render(batch);
-        ship.draw(batch, delta);
+        ship.draw(batch);
         for(Projectile blast : blasts){
             blast.render(batch);
         }
 
         for(Enemy enemy : enemies){
-            enemy.draw(batch,delta);
+            enemy.draw(batch);
         }
 
-        //batch.end();
+        batch.end();
     }
 
     public void freeze(){

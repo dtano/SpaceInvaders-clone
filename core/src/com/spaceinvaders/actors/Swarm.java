@@ -109,13 +109,15 @@ public class Swarm extends AlienGroup {
 
         // Signals the game that the player has lost since the aliens have reached its goal
         if(hitBox.getY() <= 100){
-
+            /*
             for(Alien alien : alienRows){
                 alien.dispose();
             }
 
+             */
 
-            alienRows.removeAll(alienRows);
+
+            //alienRows.removeAll(alienRows);
 
             reachEnd = true;
 
@@ -343,6 +345,7 @@ public class Swarm extends AlienGroup {
         for(AlienGroup row : alienRows){
             row.dispose();
         }
+        alienRows.removeAll(alienRows);
         rectanglePoints.dispose();
     }
 

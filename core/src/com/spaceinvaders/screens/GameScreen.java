@@ -49,9 +49,11 @@ public class GameScreen implements Screen {
         batch.begin();
         //batch.draw(bg, 60, 0, SpaceInvaders.GAME_WIDTH - 120, SpaceInvaders.GAME_HEIGHT);
         batch.draw(bg, 0, 0, SpaceInvaders.GAME_WIDTH, SpaceInvaders.GAME_HEIGHT);
-        //round.playRound(v);
         game.getScoreBoard().render(batch);
+        batch.end();
 
+        round.playRound(v);
+        //round.render();
 
         if(round.won()){
             Clock.reset();
@@ -69,13 +71,13 @@ public class GameScreen implements Screen {
              *  6. Case quit:
              *          The game quits to the desktop
              */
+            round.freeze();
             game.changeState(SpaceInvaders.State.OVER);
         }else if(round.gameOver()){
+            round.freeze();
             game.changeState(SpaceInvaders.State.OVER);
-        }else{
-            round.playRound(v);
         }
-        batch.end();
+        //batch.end();
     }
 
     @Override

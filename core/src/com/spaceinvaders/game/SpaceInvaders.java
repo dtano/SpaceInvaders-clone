@@ -51,70 +51,57 @@ public class SpaceInvaders extends Game {
 
 
 		this.setScreen(new MenuScreen(this));
-		currentState = State.MENU;
+		//currentState = State.MENU;
 		camera.setToOrtho(false,GAME_WIDTH,GAME_HEIGHT);
 	}
 
 	@Override
 	public void render () {
-		float delta = Gdx.graphics.getDeltaTime();
+		//float delta = Gdx.graphics.getDeltaTime();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		//getScreen().render(delta);
 
 
 
 		// This automatically calls the render() method of the current set screen which is pretty nifty
 		super.render();
-
-		/*
-		switch(currentState){
-			case MENU:
-				getScreen().render(delta);
-				break;
-			case GAME:
-
-				try {
-					//getScreen().hide();
-					setScreen(new GameScreen(this));
-					getScreen().render(delta);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
-				//round.playRound(delta);
-				break;
-			case OVER:
-				getScreen().hide();
-			    Screen over = new GameOverScreen(this);
-			    setScreen(over);
-			    //getScreen().render(delta);
-			    //getScreen().pause();
-                over.render(delta);
-                break;
-			case WIN:
-				// 1. Make a screen that displays WINNER and the options to return to menu or to exit
-				// 2.
-		}
-
-		 */
-
-
-
-
-
-
 	}
+
+
 	
 	@Override
 	public void dispose () {
-		round.dispose();
 		getScreen().dispose();
+		batch.dispose();
+		scoreBoard.dispose();
 
 	}
 
 	public void changeState(State state){
 		currentState = state;
+		changeScreen();
+	}
+
+	private void changeScreen(){
+		switch(currentState){
+			case MENU:
+				setScreen(new MenuScreen(this));
+				break;
+			case GAME:
+				try {
+					scoreBoard.reset();
+					setScreen(new GameScreen(this));
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+				break;
+			case OVER:
+				setScreen(new GameOverScreen(this));
+				break;
+			case WIN:
+				// 1. Make a screen that displays WINNER and the options to return to menu or to exit
+				// 2.
+		}
 	}
 
 	public Round getRound(){

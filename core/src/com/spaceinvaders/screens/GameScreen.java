@@ -75,15 +75,11 @@ public class GameScreen implements Screen {
              */
             //round.freeze();
             game.changeState(SpaceInvaders.State.OVER);
-            game.setScreen(new GameOverScreen(game));
-            //dispose();
+
 
         }else if(round.gameOver()){
-            //round.freeze();
             game.changeState(SpaceInvaders.State.OVER);
 
-            game.setScreen(new GameOverScreen(game));
-            //dispose();
         }
         //batch.end();
     }
@@ -117,6 +113,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+
         bg.dispose();
+        round.dispose();
     }
 }

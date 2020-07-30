@@ -224,7 +224,7 @@ public class Round {
     }
 
     public void dispose(){
-        batch.dispose();
+        //batch.dispose();
         ship.dispose();
     }
 

@@ -40,8 +40,8 @@ public class ScoreBoard {
         currentLives = shipLives;
     }
 
-    public void updateGraphic(int score){
-
+    public void dispose(){
+        font.dispose();
     }
 
      public void render(SpriteBatch batch){

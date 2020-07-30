@@ -64,12 +64,18 @@ public class MenuScreen implements Screen {
                 300 + start.getHeight() && SpaceInvaders.GAME_HEIGHT - Gdx.input.getY() > 300 ){
             if(Gdx.input.isTouched()){
                 game.changeState(SpaceInvaders.State.GAME);
+                //game.manageScreens(SpaceInvaders.State.GAME);
 
+                /*
                 try {
                     game.setScreen(new GameScreen(game));
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+
+                 */
+
+
 
             }
         }
@@ -77,7 +83,6 @@ public class MenuScreen implements Screen {
         if(Gdx.input.getX() < exitX + exit.getWidth() && Gdx.input.getX() > exitX && SpaceInvaders.GAME_HEIGHT - Gdx.input.getY() <
                 200 + exit.getHeight() && SpaceInvaders.GAME_HEIGHT - Gdx.input.getY() > 200 ){
             if(Gdx.input.isTouched()){
-                //game.changeState(SpaceInvaders.State.GAME);
                 Gdx.app.exit();
             }
         }

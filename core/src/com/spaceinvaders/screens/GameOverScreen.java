@@ -12,6 +12,7 @@ public class GameOverScreen implements Screen {
     private SpaceInvaders game;
     private SpriteBatch batch;
 
+    Texture bg;
     Texture gameOver;
     Texture retry;
     Texture exit;
@@ -22,6 +23,7 @@ public class GameOverScreen implements Screen {
         gameOver = new Texture("Game-Over.png");
         exit = new Texture("Exit.png");
         retry = new Texture("retry.png");
+        bg = new Texture("spaceBackgroundBig.png");
 
     }
 
@@ -36,6 +38,8 @@ public class GameOverScreen implements Screen {
         int retryX = 150;
         int exitX = 450;
         game.batch.begin();
+
+        game.batch.draw(bg, 0, 0, SpaceInvaders.GAME_WIDTH, SpaceInvaders.GAME_HEIGHT);
         game.batch.draw(gameOver, SpaceInvaders.GAME_WIDTH/2 - gameOver.getWidth()/2, 400);
         game.batch.draw(exit, 450, 200, 96, 39);
         game.batch.draw(retry, 150, 200,121,39);
@@ -45,12 +49,6 @@ public class GameOverScreen implements Screen {
                 200 + retry.getHeight() && SpaceInvaders.GAME_HEIGHT - Gdx.input.getY() > 200 ){
             if(Gdx.input.isTouched()){
                 game.changeState(SpaceInvaders.State.GAME);
-                game.getScoreBoard().reset();
-                try {
-                    game.setScreen(new GameScreen(game));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
             }
         }
 

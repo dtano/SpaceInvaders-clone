@@ -23,6 +23,7 @@ public class Swarm extends AlienGroup {
     // The column that is being used as the left and right boundaries of the hitbox
     private int leftColumn;
     private int rightColumn;
+    private int numAliens;
 
 
 
@@ -50,6 +51,8 @@ public class Swarm extends AlienGroup {
                 index++;
             }
         }
+
+        numAliens = getSize();
 
     }
 
@@ -84,7 +87,7 @@ public class Swarm extends AlienGroup {
 
     @Override
     public void update(float delta){
-        System.out.println(alienRows.size());
+
         Enemy left = rectanglePoints.getAlien(leftColumn);
         Enemy right = rectanglePoints.getAlien(rightColumn);
 
@@ -111,7 +114,7 @@ public class Swarm extends AlienGroup {
         }
 
         // Signals the game that the player has lost since the aliens have reached their goal
-        if(hitBox.getY() <= 100){
+        if(hitBox.getY() <= 50){
 
             reachEnd = true;
 
@@ -129,6 +132,20 @@ public class Swarm extends AlienGroup {
         if(alienColumns.size() > 0){
             hitBox.setWidth(right.getX() - left.getX() + right.getImg().getWidth());
         }
+
+
+
+        if(numAliens - getSize() == 4){
+            //System.out.println(numAliens);
+            System.out.println("Enough aliens have been killed for a speed update");
+            //setSpeed((float) (getSpeed() * 1.5));
+            updateVelocity();
+            rectanglePoints.updateVelocity();
+            numAliens = getSize();
+        }
+
+
+
 
 
 
@@ -380,6 +397,21 @@ public class Swarm extends AlienGroup {
         }
 
         return numAliens;
+    }
+
+
+    public void updateVelocity(){
+        for(AlienGroup row : alienRows){
+            row.updateVelocity();
+        }
+    }
+
+
+
+    public void setSpeed(float speed){
+        for(AlienGroup row : alienRows){
+            row.setSpeed(speed);
+        }
     }
 
 

@@ -180,7 +180,6 @@ public class AlienGroup extends Alien {
                     right = aliens.get(aliens.indexOf(alien) - 1);
                 }
                 //System.out.println("Alien killed: " + alien.getX() + ", " + alien.getY() + " Column num: " + alien.getColumn());
-
                 alien.kill();
 
 
@@ -242,5 +241,11 @@ public class AlienGroup extends Alien {
             killed = true;
         }
         return killed;
+    }
+
+    public void updateVelocity(){
+        for(Alien alien : aliens){
+            alien.setVelocity((float) (alien.getVelocity() * 1.4));
+        }
     }
 }

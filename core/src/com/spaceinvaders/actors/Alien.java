@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Alien extends Enemy implements IBlaster {
-    private int SPEED = 15;
+    private float SPEED = 10;
     private final double VELOCITY_INCREASE = 1.2;
     protected final int WALL_BOUNDARY = 60;
     protected boolean canShoot = false;
@@ -20,7 +20,7 @@ public abstract class Alien extends Enemy implements IBlaster {
         getSprite().draw(batch);
     }
 
-    int velocity = SPEED;
+    float velocity = SPEED;
     int direction = 1;
     @Override
     public void update(float deltaTime) {
@@ -74,8 +74,20 @@ public abstract class Alien extends Enemy implements IBlaster {
         return canShoot;
     }
 
-    public void setSpeed(int speed){
+    public void setSpeed(float speed){
         SPEED = speed;
+    }
+
+    public float getSpeed(){
+        return SPEED;
+    }
+
+    public float getVelocity(){
+        return velocity;
+    }
+
+    public void setVelocity(float velocity){
+        this.velocity = velocity;
     }
 
 

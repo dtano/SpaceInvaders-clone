@@ -110,17 +110,8 @@ public class Swarm extends AlienGroup {
 
         }
 
-        // Signals the game that the player has lost since the aliens have reached its goal
+        // Signals the game that the player has lost since the aliens have reached their goal
         if(hitBox.getY() <= 100){
-            /*
-            for(Alien alien : alienRows){
-                alien.dispose();
-            }
-
-             */
-
-
-            //alienRows.removeAll(alienRows);
 
             reachEnd = true;
 
@@ -171,7 +162,6 @@ public class Swarm extends AlienGroup {
     }
 
     public ArrayList<Alien> checkCollisions(Projectile projectile, ScoreBoard scoreBoard){
-        //int index = 0;
 
         // A nested arraylist of dead aliens
         // The outer list represents the rows of the swarm and the inner list (in the form of an AlienGroup)
@@ -222,11 +212,6 @@ public class Swarm extends AlienGroup {
 
 
 
-    @Override
-    public void action() {
-
-    }
-
     /**
      * Creates a map that contains the aliens that are to be removed
      * @return A map with row number as a key and a list of aliens as the value
@@ -260,6 +245,7 @@ public class Swarm extends AlienGroup {
         HashMap<Integer, ArrayList<Alien>> enemiesToRemove = createRemovalMap();
         //ArrayList<ArrayList<Alien>> deadAliensByRow = new ArrayList<>();
 
+        // Removes rows that do not have aliens anymore
         removeRows();
 
         int index = 0;
@@ -384,6 +370,16 @@ public class Swarm extends AlienGroup {
 
     public boolean reachedGoal(){
         return reachEnd;
+    }
+
+    public int getSize(){
+        int numAliens = 0;
+
+        for(AlienGroup row : alienRows){
+            numAliens+=row.getSize();
+        }
+
+        return numAliens;
     }
 
 

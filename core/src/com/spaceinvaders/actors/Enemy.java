@@ -17,8 +17,6 @@ public abstract class Enemy extends MovingObject{
 
     public abstract void update(float deltaTime);
 
-    public abstract void action();
-
     public void updateScore(int scoreBoard){
         scoreBoard += score;
 

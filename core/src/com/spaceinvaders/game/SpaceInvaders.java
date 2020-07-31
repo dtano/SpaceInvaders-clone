@@ -29,7 +29,8 @@ public class SpaceInvaders extends Game {
 		MENU,
 		GAME,
 		OVER,
-		WIN
+		WIN,
+		RESUME
 	}
 	private State currentState;
 
@@ -65,6 +66,7 @@ public class SpaceInvaders extends Game {
 
 		// This automatically calls the render() method of the current set screen which is pretty nifty
 		super.render();
+
 	}
 
 
@@ -96,11 +98,16 @@ public class SpaceInvaders extends Game {
 				}
 				break;
 			case OVER:
-				setScreen(new GameOverScreen(this));
+				//GameOverScreen over = new GameOverScreen(this);
+				//setScreen(new GameOverScreen(this));
+				getScreen().pause();
 				break;
 			case WIN:
 				// 1. Make a screen that displays WINNER and the options to return to menu or to exit
 				// 2.
+				break;
+			case RESUME:
+				getScreen().resume();
 		}
 	}
 

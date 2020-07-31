@@ -13,12 +13,22 @@ import com.spaceinvaders.game.SpaceInvaders;
 
 import java.util.ArrayList;
 
+/**
+ *  Represents the player-controlled ship
+ */
 public class Ship extends MovingObject implements IBlaster {
+
+    // whether or not the ship has been killed
     private boolean reset = false;
-    private static final int SPEED = 150;
+
+    private static final int SPEED = 100;
 
     private int lives = 3;
+
+    // How long the invincibility and flickering are in effect
     private int deathDelay = 3;
+
+    // Time of last death
     private float lastDeath = 0;
 
 
@@ -36,7 +46,10 @@ public class Ship extends MovingObject implements IBlaster {
         hitBox = new Rectangle(getX(), getY(), getImg().getWidth(), getImg().getHeight()/2);
     }
 
-
+    /**
+     * Draws the ship on screen
+     * @param batch the spritebatch
+     */
     public void draw(SpriteBatch batch){
 
         if(reset == true){
@@ -60,37 +73,20 @@ public class Ship extends MovingObject implements IBlaster {
         alpha+=delta;
 
         //System.out.println(isInvincible());
+
+        // Stops the invincibility and flickering effects once the time is more than the deathDelay
         if(reset && Clock.getTime() - lastDeath > deathDelay){
             System.out.println("Invincibility over");
             reset = false;
             lastDeath = 0;
         }
 
+        // This is for the flickering calculation
         if(reset == true){
             alphaModulation = +5f*(float)Math.sin(alpha) + .5f;
         }
 
-        // This is for damage flicker
-        /**
-         * import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-         * import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-         *
-         * if (playerDamaged) {
-         *     SequenceAction flicker = new SequenceAction(Actions.fadeOut(0.25f), Actions.fadeIn(0.25f));
-         *     player.addAction(Actions.repeat(6, flicker));
-         * }
-         */
-
-
-
         hitBox.setPosition(getX(), getY());
-
-
-
-    }
-
-    @Override
-    public void action() {
 
     }
 
@@ -111,6 +107,9 @@ public class Ship extends MovingObject implements IBlaster {
         return getSprite().getWidth();
     }
 
+    /**
+     *  This method is called when the ship is killed
+     */
     public void kill(){
         if(reset == false){
             lives--;
@@ -120,11 +119,8 @@ public class Ship extends MovingObject implements IBlaster {
             setY(20);
             lastDeath = Clock.getTime();
 
-            //SequenceAction flicker = new SequenceAction(Actions.fadeOut(0.25f), Actions.fadeIn(0.25f));
-            //this.addAction(Actions.repeat(6, flicker));
         }
 
-        //lives--;
 
     }
 

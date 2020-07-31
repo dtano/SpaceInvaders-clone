@@ -19,9 +19,5 @@ public class CrabAlien extends Alien {
         hitBox = new Rectangle(getX(), getY(), getSprite().getWidth(), getSprite().getHeight());
     }
 
-    public void action(){
-
-    }
-
 
 }

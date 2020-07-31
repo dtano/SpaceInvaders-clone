@@ -19,8 +19,4 @@ public class PurpleAlien extends Alien {
 
         hitBox = new Rectangle(getX(), getY(), getSprite().getWidth(), getSprite().getHeight());
     }
-    @Override
-    public void action() {
-
-    }
 }

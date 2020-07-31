@@ -104,10 +104,6 @@ public class AlienGroup extends Alien {
 
     }
 
-    @Override
-    public void action() {
-    }
-
     // Change the shot mechanics
     // Shots might have to be determined by the alien
     @Override
@@ -235,6 +231,7 @@ public class AlienGroup extends Alien {
     public ArrayList<Alien> getAliens(){
         return aliens;
     }
+
 
     public int getSize(){
         return aliens.size();

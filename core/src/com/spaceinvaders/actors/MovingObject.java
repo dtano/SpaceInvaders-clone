@@ -37,8 +37,6 @@ public abstract class MovingObject extends Actor {
 
     public abstract void update(float deltaTime);
 
-    public abstract void action();
-
     public abstract void kill();
 
     public boolean dead(){

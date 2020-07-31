@@ -41,11 +41,6 @@ public class UFO extends Enemy {
     }
 
     @Override
-    public void action() {
-
-    }
-
-    @Override
     public void reverseDirection(float delta) {
 
     }

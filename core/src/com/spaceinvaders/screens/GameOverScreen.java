@@ -39,7 +39,7 @@ public class GameOverScreen implements Screen {
         int exitX = 450;
         game.batch.begin();
 
-        game.batch.draw(bg, 0, 0, SpaceInvaders.GAME_WIDTH, SpaceInvaders.GAME_HEIGHT);
+        //game.batch.draw(bg, 0, 0, SpaceInvaders.GAME_WIDTH, SpaceInvaders.GAME_HEIGHT);
         game.batch.draw(gameOver, SpaceInvaders.GAME_WIDTH/2 - gameOver.getWidth()/2, 400);
         game.batch.draw(exit, 450, 200, 96, 39);
         game.batch.draw(retry, 150, 200,121,39);
@@ -80,11 +80,14 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
     public void dispose() {
-
+        gameOver.dispose();
+        exit.dispose();
+        bg.dispose();
+        retry.dispose();
     }
 }

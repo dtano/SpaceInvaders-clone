@@ -129,13 +129,22 @@ public class Swarm extends AlienGroup {
 
         hitBox.setPosition(left.getX(), left.getY());
 
+        // Readjustment of the hitbox width based on the current left and rught aliens
         if(alienColumns.size() > 0){
             hitBox.setWidth(right.getX() - left.getX() + right.getImg().getWidth());
         }
 
+        // Readjustment of the hitbox height based on which rows are still intact
+        if(alienRows.size() > 0){
+            Alien top = alienRows.get(alienRows.size() - 1).getAlien(0);
+            Alien bottom = alienRows.get(0).getAlien(0);
+
+            hitBox.setHeight(top.getY() - bottom.getY() + top.getHeight());
+        }
 
 
-        if(numAliens - getSize() == 4){
+        // Increase velocity when number of aliens is decreasing
+        if(numAliens - getSize() == 2){
             //System.out.println(numAliens);
             System.out.println("Enough aliens have been killed for a speed update");
             //setSpeed((float) (getSpeed() * 1.5));
@@ -178,28 +187,23 @@ public class Swarm extends AlienGroup {
 
     }
 
-    public ArrayList<Alien> checkCollisions(Projectile projectile, ScoreBoard scoreBoard){
+    public ArrayList<Alien> checkCollisions(Projectile projectile, ScoreBoard scoreBoard, ArrayList<Explosion> explosions){
 
         // A nested arraylist of dead aliens
         // The outer list represents the rows of the swarm and the inner list (in the form of an AlienGroup)
         // represents the dead aliens in that particular row
         ArrayList<Alien> deadArr = new ArrayList<>();
 
-        int rowNum = 1;
         for(AlienGroup row : alienRows){
             AlienGroup deadRow = new AlienGroup();
-            ArrayList<Alien> deadAliens = row.checkCollisions(projectile, scoreBoard);
+            ArrayList<Alien> deadAliens = row.checkCollisions(projectile, scoreBoard, explosions);
+
 
             row.removeEnemies(deadAliens);
             deadRow.addAliens(deadAliens);
             deadArr.add(deadRow);
 
-            //System.out.println("row " + rowNum + ": " + deadRow.getSize());
-            rowNum++;
 
-            // Puts the dead aliens in the map based on its row number
-            //enemiesToRemove.put(index, deadAliens);
-            //index++;
         }
 
 
@@ -408,11 +412,6 @@ public class Swarm extends AlienGroup {
 
 
 
-    public void setSpeed(float speed){
-        for(AlienGroup row : alienRows){
-            row.setSpeed(speed);
-        }
-    }
 
 
 }

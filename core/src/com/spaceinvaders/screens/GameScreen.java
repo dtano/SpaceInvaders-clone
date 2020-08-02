@@ -27,6 +27,7 @@ public class GameScreen implements Screen {
     // This could either be a GameOver or Won screen
     // topScreen means that it will be rendered on top of the gamescreen
     private Screen topScreen;
+    private int currentLevel;
 
 
     public GameScreen(SpaceInvaders game) throws FileNotFoundException {
@@ -35,9 +36,8 @@ public class GameScreen implements Screen {
 
         batch = game.batch;
         camera.setToOrtho(false,game.GAME_WIDTH,game.GAME_HEIGHT);
-        round = new Round(batch, camera, game.getScoreBoard());
-
-
+        round = new Round(batch, camera, game.getScoreBoard(), 1);
+        currentLevel = 1;
 
     }
 
@@ -50,7 +50,6 @@ public class GameScreen implements Screen {
     public void render(float v) {
 
         batch.begin();
-        //batch.draw(bg, 60, 0, SpaceInvaders.GAME_WIDTH - 120, SpaceInvaders.GAME_HEIGHT);
         batch.draw(bg, 0, 0, SpaceInvaders.GAME_WIDTH, SpaceInvaders.GAME_HEIGHT);
         game.getScoreBoard().render(batch);
         batch.end();
@@ -81,6 +80,19 @@ public class GameScreen implements Screen {
                  */
                 //round.freeze();
                 game.changeState(SpaceInvaders.State.OVER);
+
+                /**
+                 *    // Probably won't work lol
+                 *    round.transition(); // A method that makes the ship move upwards out of the screen into the next level
+                 *    render "level cleared" text for a few seconds maybe?
+                 *
+                 *
+                 *    if(currentLevel < SpaceInvaders.numLevels){
+                 *        currentLevel++;
+                 *    }
+                 *
+                 *    round = new Round(batch, camera, game.getScoreBoard(), currentLevel);
+                 */
 
 
                 /**

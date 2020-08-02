@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.spaceinvaders.actors.*;
@@ -28,6 +29,7 @@ public class Round {
 
 
     private ArrayList<Projectile> blasts = new ArrayList<>();
+    private ArrayList<Explosion> explosions = new ArrayList<>();
 
     //private ArrayList<Projectile> friendlyBlasts = new ArrayList<>();
     private float shotDelay = 0;
@@ -44,20 +46,20 @@ public class Round {
 
     private boolean gameOver = false;
     private boolean won = false;
-    private float ufo = 0.20f;
+    private float ufo = 0.80f;
     private boolean pause = false;
 
 
     // Might need to change what round instantiates and creates
     // Round for sure needs to create the enemies
     // Scoreboard and ship might be created by the game itself or gamescreen (Maybe even create a new ship every round)
-    public Round(SpriteBatch batch, OrthographicCamera camera, ScoreBoard scoreBoard) throws FileNotFoundException {
+    public Round(SpriteBatch batch, OrthographicCamera camera, ScoreBoard scoreBoard, int levelNum) throws FileNotFoundException {
         this.ship = new Ship();
         this.batch = batch;
         this.camera = camera;
         this.scoreBoard = scoreBoard;
 
-        enemies.add(EnemyFactory.getInstance().getSwarm("core/enemyPositions.csv"));
+        enemies.add(EnemyFactory.getInstance().getSwarm("core/enemyPositions" + levelNum + ".csv"));
 
     }
 
@@ -121,6 +123,8 @@ public class Round {
             // Checks for collisions between the projectiles, ship and aliens
             checkCollisions();
 
+            //updateAndRenderExplosions(delta);
+
             // Checks whether the player has lost all their lives
             if(ship.actuallyDead()){
                 gameOver = true;
@@ -137,9 +141,12 @@ public class Round {
             generateUFO();
 
         }else{
+
             // Need to remove projectiles even when the game is over
             blasts.removeAll(blasts);
         }
+
+        updateAndRenderExplosions(delta);
 
 
 
@@ -185,6 +192,22 @@ public class Round {
         }
 
         batch.end();
+    }
+
+    public void updateAndRenderExplosions(float delta){
+        ArrayList<Explosion> removedExplosions = new ArrayList<>();
+        for(Explosion explosion : explosions){
+            explosion.update(delta);
+            if(explosion.isFinished()){
+                //resume();
+                removedExplosions.add(explosion);
+            }else{
+                //freeze();
+                explosion.draw(batch);
+            }
+        }
+
+        explosions.remove(removedExplosions);
     }
 
     public void freeze(){
@@ -237,13 +260,28 @@ public class Round {
                     // AlienGroups handle the removal differently
                     if(enemy instanceof AlienGroup){
                         // Every alien in the AlienGroup that has died is saved to aliensToRemove
-                        ArrayList<Alien> aliensToRemove = ((AlienGroup) enemy).checkCollisions(blast, scoreBoard);
+                        ArrayList<Alien> aliensToRemove = ((AlienGroup) enemy).checkCollisions(blast, scoreBoard, explosions);
+
+                        // Make explosions for all the removed aliens
+                        /*
+                        for(Alien group : aliensToRemove){
+                            if(group instanceof AlienGroup){
+                                ArrayList<Alien> deadAliens = ((AlienGroup) group).getAliens();
+                                for(Alien alien : deadAliens){
+                                    explosions.add(new Explosion(new Rectangle(alien.getHitBox()), 0.2f));
+                                }
+                            }
+                        }
+
+                         */
 
                         // The dead aliens are then passed back to the AlienGroup, so that they can be removed by the AlienGroup
                         ((AlienGroup) enemy).removeEnemies(aliensToRemove);
+
                     }else{
                         if(blast.collideWith(enemy.getHitBox())) {
                             enemy.kill();
+                            explosions.add(new Explosion(new Rectangle(enemy.getHitBox()), 0.2f));
                             scoreBoard.updateScore(enemy.getScore());
                         }
                     }

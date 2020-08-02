@@ -12,7 +12,7 @@ public class PurpleAlien extends Alien {
         getSprite().setPosition(x,y);
 
         setScore(100);
-        //blaster = new AlienBlaster();
+        shotChance = 0.80f;
 
         setX(getSprite().getX());
         setY(getSprite().getY());

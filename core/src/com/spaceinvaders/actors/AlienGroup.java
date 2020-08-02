@@ -170,7 +170,7 @@ public class AlienGroup extends Alien {
      * @param scoreBoard updates the score based on the score of the alien that is hit
      * @return enemies that have been killed
      */
-    public ArrayList<Alien> checkCollisions(Projectile projectile, ScoreBoard scoreBoard){
+    public ArrayList<Alien> checkCollisions(Projectile projectile, ScoreBoard scoreBoard, ArrayList<Explosion> explosions){
         ArrayList<Alien> deadAliens = new ArrayList<>();
         for(Alien alien : aliens){
             if(projectile.collideWith(alien.getHitBox())){
@@ -181,11 +181,10 @@ public class AlienGroup extends Alien {
                 }
                 //System.out.println("Alien killed: " + alien.getX() + ", " + alien.getY() + " Column num: " + alien.getColumn());
                 alien.kill();
+                explosions.add(new Explosion(new Rectangle(alien.getHitBox()), 0.2f));
 
 
                 deadAliens.add(alien);
-                System.out.println(alien.dead());
-                System.out.println(deadAliens.size());
 
                 scoreBoard.updateScore(alien.getScore());
                 System.out.println("updated score");

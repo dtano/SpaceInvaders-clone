@@ -1,5 +1,6 @@
 package com.spaceinvaders.actors;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.spaceinvaders.strategies.IBlaster;
 
@@ -39,6 +40,7 @@ public abstract class Enemy extends MovingObject{
     }
 
     public void kill(){
+
         killed = true;
     }
 

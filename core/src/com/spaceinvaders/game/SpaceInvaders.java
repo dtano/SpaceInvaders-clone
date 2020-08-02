@@ -17,6 +17,7 @@ public class SpaceInvaders extends Game {
 	public static final int GAME_WIDTH = 720;
 	public static final int GAME_HEIGHT = 750;
 	public static final int WALL_BOUNDARY = 80;
+	public static final int NUM_LEVELS = 3;
 
 
 	public SpriteBatch batch;
@@ -38,17 +39,7 @@ public class SpaceInvaders extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		ship = new Ship();
-		scoreBoard = new ScoreBoard(ship.getLives());
-
-		/*
-		try {
-			round = new Round(batch, camera, scoreBoard);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		 */
+		scoreBoard = new ScoreBoard(3);
 
 
 		this.setScreen(new MenuScreen(this));
@@ -103,7 +94,7 @@ public class SpaceInvaders extends Game {
 				getScreen().pause();
 				break;
 			case WIN:
-				// 1. Make a screen that displays WINNER and the options to return to menu or to exit
+				// 1. Make a screen that displays LEVEL CLEARED and moves on to the next screen
 				// 2.
 				break;
 			case RESUME:
@@ -111,10 +102,7 @@ public class SpaceInvaders extends Game {
 		}
 	}
 
-	public Round getRound(){
-		return round;
-	}
-
+	/*
 	public void initRound(){
         try {
             round = new Round(batch, camera, scoreBoard);
@@ -122,6 +110,8 @@ public class SpaceInvaders extends Game {
             e.printStackTrace();
         }
     }
+
+	 */
 
     public ScoreBoard getScoreBoard(){
 		return scoreBoard;

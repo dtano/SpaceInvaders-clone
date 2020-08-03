@@ -32,7 +32,7 @@ public class UFO extends Enemy {
 
     @Override
     public void update(float deltaTime) {
-        if(getX() < 0){
+        if(getX() + getSprite().getWidth() < 0){
             kill();
             return;
         }

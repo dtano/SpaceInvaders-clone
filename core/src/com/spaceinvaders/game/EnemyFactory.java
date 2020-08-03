@@ -96,6 +96,8 @@ public class EnemyFactory {
             alien =  new CrabAlien(x,y);
         }else if(alienType.equals("purplealien")){
             alien = new PurpleAlien(x,y);
+        }else if(alienType.equals("icealien")){
+            alien = new IceAlien(x,y);
         }
         return alien;
     }

@@ -38,15 +38,20 @@ public class Round {
     private float lastShot = 0;
     private float shipDelay = 0.5f;
 
-    private int specialDelay = 8;
+    // The amount of time that has passed before a new UFO can be created
+    private int specialDelay = 10;
+
+    // The last time a UFO was requested
     private float lastRequest = 0;
+
+    // Whether or not a UFO is currently on screen
     private boolean createdUFO = false;
 
 
 
     private boolean gameOver = false;
     private boolean won = false;
-    private float ufo = 0.80f;
+    private float ufo = 0.20f;
     private boolean pause = false;
 
 
